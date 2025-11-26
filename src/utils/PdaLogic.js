@@ -1,6 +1,4 @@
-// src/utils/PdaLogic.js
 
-// Helper: Menentukan prioritas operator
 const getPrecedence = (op) => {
   if (op === "+" || op === "-") return 1;
   if (op === "*" || op === "/") return 2;
