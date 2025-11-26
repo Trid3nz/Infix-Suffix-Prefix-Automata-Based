@@ -40,7 +40,7 @@ const ExpressionConverter = () => {
       {/* Main Card container with subtle gradient border effect */}
       <div className="w-full max-w-2xl bg-slate-900 rounded-xl sm:rounded-2xl shadow-2xl border border-slate-800 overflow-hidden relative">
         {/* Decorative gradient blob */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-70 blur-sm"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-2 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 opacity-70 blur-sm"></div>
 
         {/* Header */}
         <div className="p-4 sm:p-6 lg:p-8 border-b border-slate-800">
@@ -124,7 +124,7 @@ const ExpressionConverter = () => {
           <button
             onClick={handleConvert}
             disabled={!input || isAnimating}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold py-3 sm:py-4 rounded-lg sm:rounded-xl shadow-lg shadow-blue-900/20 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
+            className="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold py-3 sm:py-4 rounded-lg sm:rounded-xl shadow-lg shadow-blue-900/20 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             {isAnimating ? "Processing..." : "Run Computation"}
           </button>
@@ -152,7 +152,7 @@ const ExpressionConverter = () => {
                     </div>
                     <button
                       onClick={() => copyToClipboard(output.converted)}
-                      className="p-2 text-slate-600 hover:text-white hover:bg-slate-800 rounded-md transition sm:opacity-0 sm:group-hover:opacity-100 flex-shrink-0"
+                      className="p-2 text-slate-600 hover:text-white hover:bg-slate-800 rounded-md transition sm:opacity-0 sm:group-hover:opacity-100 shrink-0"
                       title="Copy"
                     >
                       <Copy size={18} />
@@ -161,7 +161,7 @@ const ExpressionConverter = () => {
 
                   {/* Calculated Result */}
                   <div className="p-4 sm:p-5 bg-slate-900/50 flex items-center gap-3 sm:gap-4">
-                    <div className="p-2 sm:p-3 bg-green-500/10 rounded-full text-green-400 flex-shrink-0">
+                    <div className="p-2 sm:p-3 bg-green-500/10 rounded-full text-green-400 shrink-0">
                       <CheckCircle2 size={20} className="sm:w-6 sm:h-6" />
                     </div>
                     <div className="min-w-0">
@@ -179,17 +179,17 @@ const ExpressionConverter = () => {
               ) : (
                 // Error State
                 <div className="p-4 sm:p-6 flex items-start gap-3 sm:gap-4">
-                  <div className="text-red-500 mt-1 flex-shrink-0">
+                  <div className="text-red-500 mt-1 shrink-0">
                     <AlertCircle size={20} className="sm:w-6 sm:h-6" />
                   </div>
                   <div className="min-w-0">
                     <p className="font-bold text-red-400 text-base sm:text-lg">
                       Syntax Error
                     </p>
-                    <p className="text-red-300/80 text-sm mt-1 break-words">
+                    <p className="text-red-300/80 text-sm mt-1 break-word">
                       {output.message}
                     </p>
-                    <p className="text-slate-600 text-xs mt-3 sm:mt-4 font-mono bg-black/20 p-2 rounded break-words">
+                    <p className="text-slate-600 text-xs mt-3 sm:mt-4 font-mono bg-black/20 p-2 rounded break-word">
                       Tip: Check for unbalanced parentheses or missing
                       operators.
                     </p>
