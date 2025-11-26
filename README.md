@@ -1,16 +1,87 @@
-# React + Vite
+# PDA Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web-based mathematical expression parser and evaluator built with Pushdown Automata (PDA) principles. Convert expressions between different notations and calculate results in real-time.
 
-Currently, two official plugins are available:
+## What Does It Do?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+PDA Engine lets you:
+- Convert mathematical expressions between **infix** (A + B), **postfix** (AB+), and **prefix** (+ A B) notations
+- Evaluate expressions and get numerical results
+- Validate expression syntax with helpful error messages
 
-## React Compiler
+Perfect for learning about compiler design, expression parsing, and the Shunting Yard algorithm.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Quick Start
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js 18+ and npm installed on your system
+
+### Setup & Run
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+3. **Open your browser**
+   
+   Navigate to `http://localhost:5173`
+
+That's it! Start converting expressions.
+
+## Available Commands
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run preview  # Preview production build
+npm run lint     # Run ESLint
+```
+
+## Docker Deployment
+
+Build and run with Docker:
+
+```bash
+# Build the image
+docker build -t pda-engine .
+
+# Run the container
+docker run -p 8080:80 pda-engine
+```
+
+Access at `http://localhost:8080`
+
+## Tech Stack
+
+- **React 19** - UI framework
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **Lucide React** - Icons
+
+## Project Structure
+
+```
+src/
+├── components/          # React components
+│   └── ExpressionConverter.jsx
+├── utils/              # Core logic
+│   └── PdaLogic.js    # PDA algorithms
+├── App.jsx            # Root component
+└── main.jsx           # Entry point
+```
+
+## How It Works
+
+The engine uses classic computer science algorithms:
+- **Shunting Yard Algorithm** for infix to postfix conversion
+- **Stack-based evaluation** for calculating results
+- **Pushdown Automata** principles for parsing
+
+All conversions normalize to postfix notation as an intermediate representation, then convert to the target format.
