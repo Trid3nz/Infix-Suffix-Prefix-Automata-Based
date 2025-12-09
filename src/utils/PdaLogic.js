@@ -1,4 +1,3 @@
-
 const getPrecedence = (op) => {
   if (op === "+" || op === "-") return 1;
   if (op === "*" || op === "/") return 2;
@@ -8,24 +7,23 @@ const getPrecedence = (op) => {
 const isOperator = (token) => ["+", "-", "*", "/"].includes(token);
 
 // 1. Tokenizer: Mengubah string "10+20" menjadi array ["10", "+", "20"]
-// Ini penting agar PDA tidak bingung antara digit "1" dan angka "10"
 const tokenize = (expr) => {
   const regex = /([+\-*/()^])|\s+/g;
-  // Split, filter spasi kosong, dan return
+
   return expr
     .split(regex)
     .map((s) => (s ? s.trim() : ""))
     .filter((s) => s.length > 0);
 };
 
-// 2. Core PDA Logic: Infix to Postfix (Shunting Yard Algorithm)
+// Infix to Postfix
 const infixToPostfix = (tokens) => {
   let stack = [];
   let output = [];
 
   tokens.forEach((token) => {
     if (!isNaN(token)) {
-      output.push(token); // Operand langsung ke output
+      output.push(token);
     } else if (token === "(") {
       stack.push(token);
     } else if (token === ")") {
@@ -33,7 +31,7 @@ const infixToPostfix = (tokens) => {
         output.push(stack.pop());
       }
       if (!stack.length) throw new Error("Mismatched Parentheses");
-      stack.pop(); // Pop '('
+      stack.pop();
     } else if (isOperator(token)) {
       while (
         stack.length &&
@@ -53,7 +51,7 @@ const infixToPostfix = (tokens) => {
   return output;
 };
 
-// 3. Logic: Prefix to Postfix
+// Prefix to Postfix
 const prefixToPostfix = (tokens) => {
   let stack = [];
   // Scan dari kanan ke kiri
@@ -73,7 +71,7 @@ const prefixToPostfix = (tokens) => {
   return tokenize(stack.pop());
 };
 
-// 4. Logic: Postfix to Infix (Konversi Akhir)
+// 4. Postfix to Infix (Konversi Akhir)
 const postfixToInfix = (tokens) => {
   let stack = [];
   tokens.forEach((token) => {
@@ -90,7 +88,7 @@ const postfixToInfix = (tokens) => {
   return stack[0];
 };
 
-// 5. Logic: Postfix to Prefix (Konversi Akhir)
+// 5.Postfix to Prefix (Konversi Akhir)
 const postfixToPrefix = (tokens) => {
   let stack = [];
   tokens.forEach((token) => {
@@ -107,8 +105,6 @@ const postfixToPrefix = (tokens) => {
   return stack[0];
 };
 
-// --- MAIN INTERFACE ---
-
 export const convertExpression = (input, fromType, toType) => {
   try {
     const tokens = tokenize(input);
@@ -118,9 +114,6 @@ export const convertExpression = (input, fromType, toType) => {
     if (fromType === "infix") postfixTokens = infixToPostfix(tokens);
     else if (fromType === "postfix") postfixTokens = tokens; // Sudah postfix
     else if (fromType === "prefix") postfixTokens = prefixToPostfix(tokens);
-
-    // Validasi sederhana: Postfix harus valid agar bisa dikonversi
-    // Kita bisa melakukan dry-run evaluasi di sini jika perlu validasi ketat
 
     // Langkah 2: Konversi dari Postfix ke Target
     if (toType === "postfix") return postfixTokens.join(" ");
@@ -133,26 +126,20 @@ export const convertExpression = (input, fromType, toType) => {
 };
 
 export const validateExpression = (input, type) => {
-  // Kita "meminjam" fungsi convert untuk validasi.
-  // Jika convert melempar error, berarti tidak valid.
   const res = convertExpression(input, type, "postfix");
   return !res.startsWith("Error");
 };
-// FUNGSI BARU: Menghitung hasil dari array token Postfix
+
 const evaluatePostfix = (tokens) => {
   let stack = [];
 
   for (let token of tokens) {
-    // Jika token adalah angka (operand)
     if (!isNaN(token)) {
       stack.push(parseFloat(token));
-    }
-    // Jika token adalah operator
-    else if (isOperator(token)) {
+    } else if (isOperator(token)) {
       if (stack.length < 2)
         throw new Error("Invalid Expression for Calculation");
 
-      // Perhatikan urutan: pop pertama adalah operand kedua (B), pop kedua adalah operand pertama (A)
       const b = stack.pop();
       const a = stack.pop();
 
@@ -199,7 +186,6 @@ export const processExpression = (input, fromType, toType) => {
     else if (toType === "prefix") convertedStr = postfixToPrefix(postfixTokens);
 
     // 3. Kalkulasi Nilai (Output Angka)
-    // Kita hitung dari postfixTokens yang sudah bersih
     const calculatedValue = evaluatePostfix(postfixTokens);
 
     return {
